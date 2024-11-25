@@ -1,7 +1,7 @@
 import express from "express";
 
 const app = express();
-const port = 8081;
+const port = process.env.PORT || 8081;
 
 app.use(express.json());
 app.use("*", (req, res, next) => {
@@ -16,5 +16,5 @@ app.get("/api", (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server started on http://localhost:${port}`);
+    console.log(`Server started on ${port}`);
 });
