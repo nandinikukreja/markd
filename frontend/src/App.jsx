@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { Outlet } from "react-router-dom";
+import NavBar from "./NavBar";
 
 const App = () => {
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    fetch("/api")
-      .then((response) => response.text())
-      .then((data) => setMessage(data))
-      .catch((error) => console.log(error));
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api")
+  //     .then((response) => response.text())
+  //     .then((data) => setMessage(data))
+  //     .catch((error) => console.log(error));
+  // }, []);
 
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">{message}</h1>
+    <> 
+      <NavBar />
+      <Outlet />
     </>
   );
 };
