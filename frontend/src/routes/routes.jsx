@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import App from "./App";
-import HomePage from "./HomePage.jsx";
-import SignIn from "./SignIn.jsx";
-import GetStarted from "./GetStarted.jsx";
+import App from "../App";
+import HomePage from "../pages/HomePage";
+import SignIn from "../pages/SignIn";
+import GetStarted from "../pages/GetStarted";
 
 const AppRoutes = () => {
     return (
