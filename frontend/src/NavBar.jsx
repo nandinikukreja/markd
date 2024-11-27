@@ -5,7 +5,7 @@ const NavBar = () => {
     return (
         <nav className="flex items-center justify-between p-4 bg-white shadow">
         <div className="text-2xl font-bold">
-          <Link to="/">Logo</Link>
+          <Link to="/"><img src="Markd.svg" alt="Logo" className="h-12 w-auto"/></Link>
         </div>
         <div className="space-x-4">
           <Link to="/signin" className="text-gray-600 hover:text-gray-800">
