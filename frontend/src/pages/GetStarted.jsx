@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Modal from "../components/Modal";
 
 const GetStarted = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +8,10 @@ const GetStarted = () => {
     email: "",
     password: "",
   });
+  const [modalMessage, setModalMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [modalAction, setModalAction] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,17 +26,19 @@ const GetStarted = () => {
       });
 
       if (response.ok) {
-        const user = await response.json();
-        // handle the successful signup!
-        console.log("user created:", user);
+        setModalMessage("Account created successfully! Please sign in.");
+        setModalAction(() => () => navigate("/signin"));
+        setShowModal(true);
       } else {
         const error = await response.json();
-        console.log("Failed to create user");
-        console.log(error);
+        setModalMessage(`Error: ${error.message}`);
+        setShowModal(true);
+        setModalAction(null);
       }
     } catch (error) {
-      console.log("Most likely a netowkr issue`");
-      console.log(error);
+      setModalMessage("Network Error.");
+      setShowModal(true);
+      setModalAction(null);
     }
   };
 
@@ -39,7 +46,12 @@ const GetStarted = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+  }
+
   return (
+    <>
     <div className="min-h-[calc(100vh-76px)] flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 bg-white p-8 shadow-lg rounded-2xl">
         <div>
@@ -130,7 +142,14 @@ const GetStarted = () => {
         </form>
       </div>
     </div>
+
+    {
+      showModal && (
+        <Modal message={modalMessage} onClose={closeModal} onConfirm={modalAction} confirmText="Go to Sign In" />
+      )
+    }
+    </>
   );
-};
+};  
 
 export default GetStarted;
