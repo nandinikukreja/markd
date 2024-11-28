@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import bcrpyt from "bcrypt";
 import User from "./models/User.js";
 
 dotenv.config();
@@ -50,6 +51,26 @@ app.get("/api/users", async (req, res) => {
     res.send(users).status(200);
   } catch (err) {
     res.send(err).status(500);
+  }
+});
+
+app.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if(!user) return res.status(400).json({ message: "User not found" });
+
+    const isMatch = await bcrpyt.compare(password, user.password);
+
+    if(!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+
+    res.status(200).json({ message: "Login Successful" });
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

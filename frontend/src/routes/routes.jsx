@@ -3,6 +3,7 @@ import App from "../App";
 import HomePage from "../pages/HomePage";
 import SignIn from "../pages/SignIn";
 import GetStarted from "../pages/GetStarted";
+import Dashboard from "../pages/Dashboard";
 
 const AppRoutes = () => {
     return (
@@ -12,6 +13,7 @@ const AppRoutes = () => {
                     <Route index element={<HomePage />} />
                     <Route path="signin" element={<SignIn />} />
                     <Route path="getstarted" element={<GetStarted />} />
+                    <Route path="dashboard" element={<Dashboard />} />
                 </Route>
             </Routes>
         </Router>

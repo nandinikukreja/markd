@@ -1,11 +1,43 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const handleSubmit = (e) => {
+
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  }); 
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // future implementation
+    
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if(response.ok) {
+        navigate("/dashboard");
+        console.log("User logged in successfully");
+      }
+      else {
+        const error = await response.json();
+        console.log(error);
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
+
+  const handleChange = (e) => {
+    setFormData({...formData, [e.target.name]: e.target.value,});
+  }
 
   return (
     <div className="min-h-[calc(100vh-76px)] flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -43,6 +75,8 @@ const SignIn = () => {
                 required
                 className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
                 placeholder="Enter your email"
+                onChange={handleChange}
+                value = {formData.email}
               />
             </div>
             <div>
@@ -57,32 +91,11 @@ const SignIn = () => {
                 required
                 className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
                 placeholder="Enter your password"
+                onChange={handleChange}
+                value = {formData.password}
               />
             </div>
           </div>
-
-          {
-          /* <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
-              />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
-                Remember me
-              </label>
-            </div>
-
-            <div className="text-sm">
-              <a href="#" className="font-medium text-black hover:text-gray-800">
-                Forgot your password?
-              </a>
-            </div>
-          </div> */
-          // for future implementation
-          }
 
           <button
             type="submit"
