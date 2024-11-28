@@ -69,10 +69,10 @@ app.post("/api/login", async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = jwt.sign({ userId: user._id }, 
+    const token = jwt.sign({ userId: user._id, userAgent: req.headers['user-agent'], ip: req.ip }, 
       process.env.JWT_SECRET, 
       {
-        expiresIn: "1h",
+        expiresIn: "15m",
       }
     );
     res.status(200).json({ message: "Login Successful", token });

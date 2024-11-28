@@ -9,6 +9,13 @@ const auth = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        const currentAgent = req.headers["user-agent"];
+        const currentIp = req.ip;
+
+        if(decoded.userAgent !== currentAgent || decoded.ip !== currentIp) 
+            return res.status(401).json({ message: "Invalid Token" });
+
         req.user = decoded;
         next();
     }
