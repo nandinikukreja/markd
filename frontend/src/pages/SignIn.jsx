@@ -26,7 +26,9 @@ const SignIn = () => {
       });
 
       if (response.ok) {
+        const data = await response.json();
         setModalMessage("Sign-In successful!");
+        localStorage.setItem("token", data.token);
         setModalAction(() => () => navigate("/dashboard"));
         setShowModal(true);
       } else {
@@ -37,6 +39,7 @@ const SignIn = () => {
       }
     } catch (error) {
       setModalMessage("Network Error.");
+      console.log(error);
       setShowModal(true);
       setModalAction(null);
     }
