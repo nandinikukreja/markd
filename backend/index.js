@@ -3,7 +3,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import bcrpyt from "bcrypt";
+import jwt from "jsonwebtoken";
 import User from "./models/User.js";
+import auth from "./middleware/auth.js";
 
 dotenv.config();
 
@@ -60,19 +62,29 @@ app.post("/api/login", async (req, res) => {
   try {
     const user = await User.findOne({ email });
 
-    if(!user) return res.status(400).json({ message: "User not found" });
+    if (!user) return res.status(400).json({ message: "User not found" });
 
     const isMatch = await bcrpyt.compare(password, user.password);
 
-    if(!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+    if (!isMatch)
+      return res.status(400).json({ message: "Invalid credentials" });
 
-    res.status(200).json({ message: "Login Successful" });
-  }
-  catch (err) {
+    const token = jwt.sign({ userId: user._id }, 
+      process.env.JWT_SECRET, 
+      {
+        expiresIn: "1h",
+      }
+    );
+    res.status(200).json({ message: "Login Successful", token });
+  } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
+app.get("/api/dashboard", auth, (req, res) => {
+  res.status(200).json({ message: "Dashboard", user: req.user });
+})
 
 app.listen(port, () => {
   console.log(`Server started on ${port}`);
