@@ -5,6 +5,7 @@ import SignIn from "../pages/SignIn";
 import GetStarted from "../pages/GetStarted";
 import Dashboard from "../pages/Dashboard";
 import NewArticle from "../pages/NewArticle";
+import Article from "../pages/Article";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 const AppRoutes = () => {
@@ -25,6 +26,7 @@ const AppRoutes = () => {
                             <NewArticle />
                         </ProtectedRoute>
                     } />
+                    <Route path="articles/:id" element={<Article />} />
                 </Route>
             </Routes>
         </Router>

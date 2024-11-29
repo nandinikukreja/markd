@@ -70,8 +70,9 @@ app.post("/api/login", async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = jwt.sign({ userId: user._id, userAgent: req.headers['user-agent'], ip: req.ip }, 
-      process.env.JWT_SECRET, 
+    const token = jwt.sign(
+      { userId: user._id, userAgent: req.headers["user-agent"], ip: req.ip },
+      process.env.JWT_SECRET,
       {
         expiresIn: "15m",
       }
@@ -111,7 +112,19 @@ app.get("/api/articles", async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-})
+});
+
+app.get("/api/articles/:id", async (req, res) => {
+  try {
+    const article = await Article.findById(req.params.id).populate(
+      "author",
+      "name"
+    );
+    res.status(200).json(article);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server started on ${port}`);
