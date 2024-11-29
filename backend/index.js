@@ -74,7 +74,7 @@ app.post("/api/login", async (req, res) => {
       { userId: user._id, userAgent: req.headers["user-agent"], ip: req.ip },
       process.env.JWT_SECRET,
       {
-        expiresIn: "15m",
+        expiresIn: "30m",
       }
     );
     res.status(200).json({ message: "Login Successful", token });
@@ -105,7 +105,7 @@ app.post("/api/articles", auth, async (req, res) => {
   }
 });
 
-app.get("/api/articles", async (req, res) => {
+app.get("/api/articles", auth, async (req, res) => {
   try {
     const articles = await Article.find().populate("author", "name");
     res.status(200).json(articles);
@@ -114,7 +114,7 @@ app.get("/api/articles", async (req, res) => {
   }
 });
 
-app.get("/api/articles/:id", async (req, res) => {
+app.get("/api/articles/:id", auth, async (req, res) => {
   try {
     const article = await Article.findById(req.params.id).populate(
       "author",

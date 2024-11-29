@@ -29,7 +29,11 @@ const Dashboard = () => {
   }, [navigate]);
 
   useEffect(() => {
-    fetch("/api/articles")
+    fetch("/api/articles", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setArticles(data))
       .catch((err) => console.error(err));
