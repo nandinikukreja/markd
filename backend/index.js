@@ -84,7 +84,13 @@ app.post("/api/login", async (req, res) => {
 
 app.get("/api/dashboard", auth, (req, res) => {
   res.status(200).json({ message: "Dashboard", user: req.user });
-})
+});
+
+app.get("/api/verify-token", auth, (req, res) => {
+  res.status(200).json({ valid: true, user: req.user });
+});
+
+
 
 app.listen(port, () => {
   console.log(`Server started on ${port}`);
