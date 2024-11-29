@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import SignIn from "../pages/SignIn";
 import GetStarted from "../pages/GetStarted";
 import Dashboard from "../pages/Dashboard";
+import NewArticle from "../pages/NewArticle";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 const AppRoutes = () => {
@@ -17,6 +18,11 @@ const AppRoutes = () => {
                     <Route path="dashboard" element={
                         <ProtectedRoute>
                             <Dashboard />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="new-article" element={
+                        <ProtectedRoute>
+                            <NewArticle />
                         </ProtectedRoute>
                     } />
                 </Route>

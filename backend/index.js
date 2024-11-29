@@ -5,6 +5,7 @@ import cors from "cors";
 import bcrpyt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "./models/User.js";
+import Article from "./models/Article.js";
 import auth from "./middleware/auth.js";
 
 dotenv.config();
@@ -90,7 +91,27 @@ app.get("/api/verify-token", auth, (req, res) => {
   res.status(200).json({ valid: true, user: req.user });
 });
 
+app.post("/api/articles", auth, async (req, res) => {
+  try {
+    const article = new Article({
+      ...req.body,
+      author: req.user.userId,
+    });
+    await article.save();
+    res.status(201).json(article);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
+app.get("/api/articles", async (req, res) => {
+  try {
+    const articles = await Article.find().populate("author", "name");
+    res.status(200).json(articles);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
 
 app.listen(port, () => {
   console.log(`Server started on ${port}`);

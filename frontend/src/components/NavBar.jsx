@@ -18,6 +18,11 @@ const NavBar = () => {
         </Link>
       </div>
       <div className="space-x-4">
+        {token && (
+          <Link to="/new-article" className="text-gray-600 hover:text-gray-800">
+            Write
+          </Link>
+        )}
         {token ? (
           <button
             onClick={handleLogout}

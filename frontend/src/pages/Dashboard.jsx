@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -27,6 +28,13 @@ const Dashboard = () => {
     }
   }, [navigate]);
 
+  useEffect(() => {
+    fetch("/api/articles")
+      .then((res) => res.json())
+      .then((data) => setArticles(data))
+      .catch((err) => console.error(err));
+  });
+
   return (
     <div className="min-h-screen bg-white">
       {/* Main Content */}
@@ -35,35 +43,31 @@ const Dashboard = () => {
           {/* Left Column - Articles (Full width on mobile) */}
           <div className="w-full md:flex-1 md:max-w-2xl">
             {/* Article List */}
-            {[1, 2, 3, 4, 5].map((article) => (
-              <article 
-                key={article} 
+            {articles.map((article) => (
+              <article
+                key={article._id}
                 className="py-6 md:py-8 border-b border-gray-200"
               >
+                {/* Article content */}
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-6 h-6 rounded-full bg-gray-200"></div>
-                  <span className="text-sm font-medium">John Doe</span>
-                  <span className="text-sm text-gray-500">· Apr 15</span>
+                  <span className="text-sm font-medium">
+                    {article.author.name}
+                  </span>
+                  <span className="text-sm text-gray-500">
+                    · {new Date(article.createdAt).toDateString()}
+                  </span>
                 </div>
-                <h2 className="text-lg md:text-xl font-bold mb-2 hover:underline cursor-pointer">
-                  Building Better Web Applications with Modern Technologies
+                <h2
+                  className="text-lg md:text-xl font-bold mb-2 hover:underline cursor-pointer"
+                  onClick={() => navigate(`/articles/${article._id}`)}
+                >
+                  {article.title}
                 </h2>
                 <p className="text-sm md:text-base text-gray-600 mb-4 line-clamp-2">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  {article.content.substring(0, 150)}...
                 </p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 md:gap-4">
-                    <span className="text-xs md:text-sm text-gray-500">5 min read</span>
-                    <span className="text-xs md:text-sm px-2 py-1 bg-gray-100 rounded-full">
-                      Technology
-                    </span>
-                  </div>
-                  <button className="text-gray-400 hover:text-gray-600">
-                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                    </svg>
-                  </button>
-                </div>
+                {/* Rest of the article card */}
               </article>
             ))}
           </div>
@@ -77,12 +81,18 @@ const Dashboard = () => {
                 placeholder="Search..."
                 className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-gray-400"
               />
-              
+
               {/* Trending Topics */}
               <div className="mt-8">
                 <h3 className="font-semibold mb-4">Trending Topics</h3>
                 <div className="space-y-2">
-                  {['Technology', 'Programming', 'Web Development', 'AI', 'Design'].map((topic) => (
+                  {[
+                    "Technology",
+                    "Programming",
+                    "Web Development",
+                    "AI",
+                    "Design",
+                  ].map((topic) => (
                     <button
                       key={topic}
                       className="block w-full text-left px-4 py-2 rounded-full hover:bg-gray-100"
