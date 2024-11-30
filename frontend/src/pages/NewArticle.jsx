@@ -46,70 +46,70 @@ const NewArticle = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold mb-6">Write a New Article</h1>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Title */}
-        <div>
-          <label
-            htmlFor="title"
-            className="block text-lg font-medium text-gray-700"
+    <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <div className="bg-white rounded-2xl shadow-lg p-8">
+        <h1 className="text-4xl font-bold mb-8 text-center">Write Your Story</h1>
+        
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Title */}
+          <div>
+            <label htmlFor="title" className="block text-lg font-semibold text-gray-700 mb-2">
+              Title
+            </label>
+            <input
+              id="title"
+              name="title"
+              type="text"
+              required
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent transition-all"
+              placeholder="Enter your title..."
+              onChange={handleChange}
+              value={formData.title}
+            />
+          </div>
+
+          {/* Content */}
+          <div>
+            <label htmlFor="content" className="block text-lg font-semibold text-gray-700 mb-2">
+              Content
+            </label>
+            <textarea
+              id="content"
+              name="content"
+              rows="12"
+              required
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent transition-all"
+              placeholder="Tell your story..."
+              onChange={handleChange}
+              value={formData.content}
+            ></textarea>
+          </div>
+
+          {/* Tags */}
+          <div>
+            <label htmlFor="tags" className="block text-lg font-semibold text-gray-700 mb-2">
+              Tags
+            </label>
+            <input
+              id="tags"
+              name="tags"
+              type="text"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent transition-all"
+              placeholder="Add tags separated by commas (e.g. technology, programming, web)"
+              onChange={handleChange}
+              value={formData.tags}
+            />
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full px-6 py-3 bg-black text-white text-lg font-semibold rounded-lg hover:bg-gray-800 transform hover:scale-[1.02] transition-all duration-200"
           >
-            Title
-          </label>
-          <input
-            id="title"
-            name="title"
-            type="text"
-            required
-            className="mt-1 block w-full border px-3 py-2 rounded"
-            onChange={handleChange}
-            value={formData.title}
-          />
-        </div>
-        {/* Content */}
-        <div>
-          <label
-            htmlFor="content"
-            className="block text-lg font-medium text-gray-700"
-          >
-            Content
-          </label>
-          <textarea
-            id="content"
-            name="content"
-            rows="10"
-            required
-            className="mt-1 block w-full border px-3 py-2 rounded"
-            onChange={handleChange}
-            value={formData.content}
-          ></textarea>
-        </div>
-        {/* Tags */}
-        <div>
-          <label
-            htmlFor="tags"
-            className="block text-lg font-medium text-gray-700"
-          >
-            Tags (comma separated)
-          </label>
-          <input
-            id="tags"
-            name="tags"
-            type="text"
-            className="mt-1 block w-full border px-3 py-2 rounded"
-            onChange={handleChange}
-            value={formData.tags}
-          />
-        </div>
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full px-6 py-2 bg-black text-white rounded hover:bg-gray-800"
-        >
-          Publish
-        </button>
-      </form>
+            Publish Story
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
