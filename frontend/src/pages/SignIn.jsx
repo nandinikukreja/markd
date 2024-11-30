@@ -29,6 +29,7 @@ const SignIn = () => {
         const data = await response.json();
         setModalMessage("Sign-In successful!");
         localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId);
         setModalAction(() => () => navigate("/dashboard"));
         setShowModal(true);
       } else {

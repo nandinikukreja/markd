@@ -77,7 +77,7 @@ app.post("/api/login", async (req, res) => {
         expiresIn: "30m",
       }
     );
-    res.status(200).json({ message: "Login Successful", token });
+    res.status(200).json({ message: "Login Successful", token, userId: user._id });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal Server Error" });
@@ -125,6 +125,40 @@ app.get("/api/articles/:id", auth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+app.get("/api/users/:id", auth, async (req, res) => {
+  try {
+    const userId = req.params.Id;
+    const user = await User.findById(userId).select("-password");
+    if(!user) return res.status(404).json({message: "User not found"});
+
+    const articles = await Article.find({author: userId}).populate("author", "name");
+
+    res.status(200).json({user, articles});
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+app.put("/api/users/:id", auth, async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    if(userId != req.user.userId)
+      return res.status(401).json({message: "Unauthorized"});
+    
+    const {name, bio} = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {name, bio},
+      {new: true, runValidators: true}
+    ).select("-password");
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
 
 app.listen(port, () => {
   console.log(`Server started on ${port}`);
