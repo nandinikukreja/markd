@@ -128,7 +128,7 @@ app.get("/api/articles/:id", auth, async (req, res) => {
 
 app.get("/api/users/:id", auth, async (req, res) => {
   try {
-    const userId = req.params.Id;
+    const userId = req.params.id;
     const user = await User.findById(userId).select("-password");
     if(!user) return res.status(404).json({message: "User not found"});
 
