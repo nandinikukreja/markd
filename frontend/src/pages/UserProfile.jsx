@@ -122,7 +122,7 @@ const UserProfile = () => {
             >
                 {article.title}
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 break-words overflow-hidden">
                 {article.content.substring(0, 100)}...
             </p>
             </div>
