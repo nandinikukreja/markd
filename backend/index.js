@@ -74,7 +74,7 @@ app.post("/api/login", async (req, res) => {
       { userId: user._id , email: user.email },
       process.env.JWT_SECRET,
       {
-        expiresIn: "30m",
+        expiresIn: "8h",
       }
     );
     res.status(200).json({ message: "Login Successful", token, userId: user._id });
