@@ -42,7 +42,7 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Main Content */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto mt-10 px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left Column - Articles (Full width on mobile) */}
           <div className="w-full md:flex-1 md:max-w-2xl">

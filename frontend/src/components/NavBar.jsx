@@ -13,43 +13,57 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between p-4 px-8 bg-white shadow">
-      <div className="text-2xl font-bold">
-        <Link to="/">
-          <img src="Markd.svg" alt="Logo" className="h-12 w-auto" />
-        </Link>
-      </div>
-      <div className="space-x-4">
-        {token && (
-          <>
-          <Link to="/new-article" className="text-gray-600 hover:text-gray-800 hover:underline">
-            Write
-          </Link>
-          <Link to={`/users/${userId}`} className="text-gray-600 hover:text-gray-800 hover:underline">
-            Profile
-          </Link>
-          </>
-        )}
-        {token ? (
-          <button
-            onClick={handleLogout}
-            className="text-gray-600 hover:text-gray-800"
-          >
-            Logout
-          </button>
-        ) : (
-          <>
-            <Link to="/signin" className="text-gray-600 hover:text-gray-800">
-              Sign In
+    <nav className="sticky top-0 z-50 bg-white shadow-md backdrop-blur-sm bg-opacity-90">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="transform hover:scale-105 transition-transform duration-200">
+              <img src="Markd.gif" alt="Logo" className="h-12 w-auto" />
             </Link>
-            <Link
-              to="/getstarted"
-              className="px-4 py-2 bg-black text-white rounded-full hover:bg-gray-800"
-            >
-              Get Started
-            </Link>
-          </>
-        )}
+          </div>
+
+          {/* Navigation Links */}
+          <div className="flex items-center gap-6">
+            {token ? (
+              <>
+                <Link 
+                  to="/new-article" 
+                  className="text-gray-600 hover:text-black transition-colors duration-200 font-medium"
+                >
+                  Write
+                </Link>
+                <Link 
+                  to={`/users/${userId}`} 
+                  className="text-gray-600 hover:text-black transition-colors duration-200 font-medium"
+                >
+                  Profile
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 rounded-full text-gray-600 hover:text-black hover:bg-gray-100 transition-all duration-200 font-medium"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link 
+                  to="/signin" 
+                  className="text-gray-600 hover:text-black transition-colors duration-200 font-medium"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/getstarted"
+                  className="px-4 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition-colors duration-200 font-medium"
+                >
+                  Get Started
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </nav>
   );
