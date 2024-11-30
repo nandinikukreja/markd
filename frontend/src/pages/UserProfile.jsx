@@ -65,7 +65,7 @@ const UserProfile = () => {
   if (!userData) return <div>Loading...</div>;
 
   return (
-    <div className="max-w-3xl mx-auto py-8">
+    <div className="max-w-3xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
       {isEditing ? (
         <div className="mb-6">
           <input
@@ -113,19 +113,21 @@ const UserProfile = () => {
 
       {/* User's Articles */}
       <h2 className="text-2xl font-semibold mt-8 mb-4">Articles</h2>
-      {articles.map((article) => (
-        <div key={article._id} className="mb-4">
-          <h3
-            onClick={() => navigate(`/articles/${article._id}`)}
-            className="text-xl font-bold cursor-pointer hover:underline"
-          >
-            {article.title}
-          </h3>
-          <p className="text-gray-600">
-            {article.content.substring(0, 100)}...
-          </p>
-        </div>
-      ))}
+      <div className="space-y-6">
+        {articles.map((article) => (
+            <div key={article._id} className="mb-4">
+            <h3
+                onClick={() => navigate(`/articles/${article._id}`)}
+                className="text-xl font-bold cursor-pointer hover:underline"
+            >
+                {article.title}
+            </h3>
+            <p className="text-gray-600">
+                {article.content.substring(0, 100)}...
+            </p>
+            </div>
+        ))}
+      </div>
     </div>
   );
 };
