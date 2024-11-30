@@ -46,7 +46,7 @@ const NewArticle = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto py-8">
+    <div className="max-w-3xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
       <h1 className="text-3xl font-bold mb-6">Write a New Article</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Title */}
@@ -105,7 +105,7 @@ const NewArticle = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="px-6 py-2 bg-black text-white rounded hover:bg-gray-800"
+          className="w-full px-6 py-2 bg-black text-white rounded hover:bg-gray-800"
         >
           Publish
         </button>
