@@ -48,14 +48,14 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
-app.get("/api/users", async (req, res) => {
-  try {
-    const users = await User.find();
-    res.send(users).status(200);
-  } catch (err) {
-    res.send(err).status(500);
-  }
-});
+// app.get("/api/users", async (req, res) => {
+//   try {
+//     const users = await User.find();
+//     res.send(users).status(200);
+//   } catch (err) {
+//     res.send(err).status(500);
+//   }
+// });
 
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
