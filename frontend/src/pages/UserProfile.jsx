@@ -13,7 +13,7 @@ const UserProfile = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch(`/api/users/${id}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/users/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -46,7 +46,7 @@ const UserProfile = () => {
   const handleSave = () => {
     const token = localStorage.getItem("token");
 
-    fetch(`/api/users/${id}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/users/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

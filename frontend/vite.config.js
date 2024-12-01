@@ -8,8 +8,6 @@ export default defineConfig({
     proxy: {
       '/api': 'http://localhost:8081'
     },
-    server: {
-      host: true,
-    }
+    host: 'true',
   }
 })

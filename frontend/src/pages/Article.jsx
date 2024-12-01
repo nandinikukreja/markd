@@ -7,7 +7,7 @@ const Article = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/articles/${id}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/articles/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

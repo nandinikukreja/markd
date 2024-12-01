@@ -13,7 +13,7 @@ const Dashboard = () => {
     if (!token) {
       navigate("/signin");
     } else {
-      fetch("/api/dashboard", {
+      fetch(`${import.meta.env.VITE_API_URL}/api/dashboard`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -30,7 +30,7 @@ const Dashboard = () => {
   }, [navigate]);
 
   useEffect(() => {
-    fetch("/api/articles", {
+    fetch(`${import.meta.env.VITE_API_URL}/api/articles`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

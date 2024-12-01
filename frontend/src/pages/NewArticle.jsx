@@ -14,7 +14,7 @@ const NewArticle = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch("/api/articles", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/articles`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

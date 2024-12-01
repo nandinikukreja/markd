@@ -11,7 +11,7 @@ const ProtectedRoute = ({ children }) => {
       if (!token) navigate("/signin");
       else {
         try {
-          const res = await fetch("/api/verify-token", {
+          const res = await fetch(`${import.meta.env.VITE_API_URL}/api/verify-token`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
