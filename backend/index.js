@@ -11,7 +11,7 @@ import auth from "./middleware/auth.js";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 8081;
+const port = process.env.PORT;
 
 mongoose
   .connect(process.env.DB_CONNECTION_STRING)
@@ -161,5 +161,5 @@ app.put("/api/users/:id", auth, async (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Server started on ${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
