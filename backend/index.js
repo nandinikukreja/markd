@@ -1,7 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import cors from "cors";
 import bcrpyt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "./models/User.js";
@@ -24,15 +23,14 @@ mongoose
 
 app.use(express.json());
 app.use("*", (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Origin", `${process.env.CLIENT_URL}`);
+  res.setHeader("Access-Control-Allow-Headers", `${process.env.CLIENT_URL}`);
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, OPTIONS"
   );
   next();
 });
-app.use(cors());
 
 app.get("/api", (req, res) => {
   res.send("Hello World from the Server");
