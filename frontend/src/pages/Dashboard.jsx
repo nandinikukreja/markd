@@ -13,7 +13,7 @@ const Dashboard = () => {
     if (!token) {
       navigate("/signin");
     } else {
-      fetch(`${import.meta.env.VITE_API_URL}/api/dashboard`, {
+      fetch(`${import.meta.env.VITE_API_URL}/api/auth/dashboard`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

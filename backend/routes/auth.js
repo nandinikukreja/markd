@@ -39,4 +39,8 @@ router.get("/verify-token", auth, (req, res) => {
   res.status(200).json({ valid: true, user: req.user });
 });
 
+router.get("/dashboard", auth, (req, res) => {
+  res.status(200).json({ message: "Dashboard", user: req.user });
+});
+
 export default router;
