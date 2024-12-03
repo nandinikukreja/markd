@@ -1,6 +1,6 @@
-import express from 'express';
-import Article from '../models/Article.js';
-import auth from '../middleware/auth.js';
+import express from "express";
+import Article from "../models/Article.js";
+import auth from "../middleware/auth.js";
 
 const router = express.Router();
 

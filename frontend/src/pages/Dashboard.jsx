@@ -8,37 +8,36 @@ const Dashboard = () => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
+  const fetchArticles = async () => {
     const token = localStorage.getItem("token");
+    const url = `${import.meta.env.VITE_API_URL}/api/articles`;
 
-    if (!token) {
-      navigate("/signin");
-    } else {
-      fetch(`${import.meta.env.VITE_API_URL}/api/auth/dashboard`, {
+    try {
+      const response = await fetch(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setUser(data.user);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          navigate("/signin");
-        });
-    }
-  }, [navigate]);
+      });
 
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/articles`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setArticles(data))
-      .catch((err) => console.error(err));
-  }, []);
+      if (response.status === 401) {
+        navigate("/signin");
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setArticles(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Error fetching articles:", err);
+      setArticles([]);
+    }
+  };
+
+  fetchArticles();
+}, [navigate]);
 
   return (
     <div className="min-h-screen bg-gray-50">
