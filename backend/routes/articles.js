@@ -51,11 +51,43 @@ router.delete("/:id", auth, async (req, res) => {
       return res.status(404).json({ message: "Article not found" });
     }
 
+    if (article.author.toString() !== req.user.userId) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
     await Article.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "Article deleted successfully" });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+// PUT /api/articles/:id
+
+router.put("/:id", auth, async (req, res) => {
+  try {
+    const articleId = req.params.id;
+    const updates = req.body;
+    const article = await Article.findByIdAndUpdate(articleId);
+
+    if (!article) {
+      return res.status(404).json({ message: "Article not found" });
+    }
+
+    if (article.author.toString() !== req.user.userId) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    article.title = updates.title || article.title;
+    article.content = updates.content || article.content;
+    article.tags = updates.tags || article.tags;
+
+    await article.save();
+    res.status(200).json(article);
+  }
+  catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+})
 
 export default router;

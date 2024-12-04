@@ -116,6 +116,15 @@ const Article = () => {
             </div>
           </div>
         )}
+
+        {article.author._id === localStorage.getItem("userId") && (
+          <button
+            onClick={() => navigate(`/edit-article/${article._id}`)}
+            className="mt-4 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+          >
+            Edit Article
+          </button>
+        )}
       </article>
     </div>
   );

@@ -7,6 +7,7 @@ import Dashboard from "../pages/Dashboard";
 import NewArticle from "../pages/NewArticle";
 import Article from "../pages/Article";
 import UserProfile from "../pages/UserProfile";
+import EditArticle from "../pages/EditArticle";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 const AppRoutes = () => {
@@ -29,6 +30,11 @@ const AppRoutes = () => {
                     } />
                     <Route path="articles/:id" element={<Article />} />
                     <Route path="users/:id" element={<UserProfile />} />
+                    <Route path="edit-article/:id" element={
+                        <ProtectedRoute>
+                            <EditArticle />
+                        </ProtectedRoute>
+                    } />
                 </Route>
             </Routes>
         </Router>
