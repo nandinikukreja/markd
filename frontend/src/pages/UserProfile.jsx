@@ -64,11 +64,10 @@ const UserProfile = () => {
   };
 
   const handleDeleteClick = (articleId) => {
-    if(confirmDelete === articleId) {
+    if (confirmDelete === articleId) {
       deleteArticle(articleId);
       setConfirmDelete(null);
-    } 
-    else {
+    } else {
       setConfirmDelete(articleId);
 
       setTimeout(() => {
@@ -83,17 +82,18 @@ const UserProfile = () => {
     fetch(`${import.meta.env.VITE_API_URL}/api/articles/${articleId}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
-    }).then((res) => {
-      if(res.ok) {
-        setArticles(articles.filter((article) => article._id !== articleId))
-      }
-      else {
-        console.error("Failed to delete the article");
-      }
-    }).catch((err) => console.error(err));
-  }
+    })
+      .then((res) => {
+        if (res.ok) {
+          setArticles(articles.filter((article) => article._id !== articleId));
+        } else {
+          console.error("Failed to delete the article");
+        }
+      })
+      .catch((err) => console.error(err));
+  };
 
   if (!userData) {
     return (
@@ -197,19 +197,29 @@ const UserProfile = () => {
             articles.map((article) => (
               <article
                 key={article._id}
-                className="relative border-b border-gray-100 last:border-0 pb-8 last:pb-0"
+                className="relative border-b border-gray-100 last:border-0 pb-12 last:pb-0"
               >
                 {loggedInUserId === id && (
-                  <button
-                    onClick={() => handleDeleteClick(article._id)}
-                    className={`absolute bottom-0 right-0 pb-8 rounded-full text-gray-400 hover:text-red-600 transition-all duration-300 ${
-                      confirmDelete === article._id ? "opacity-100" : "opacity-50"
-                    }`}
-                  >
-                    {confirmDelete === article._id ? "Confirm?" : "Delete"}
-                  </button>
+                  <>
+                    <button
+                      onClick={() => handleDeleteClick(article._id)}
+                      className={`absolute bottom-0 right-0 pb-2 rounded-full text-gray-400 hover:text-red-600 transition-all duration-300 ${
+                        confirmDelete === article._id
+                          ? "opacity-100"
+                          : "opacity-50"
+                      }`}
+                    >
+                      {confirmDelete === article._id ? "Confirm?" : "Delete"}
+                    </button>
+                    <button
+                      onClick={() => navigate(`/edit-article/${article._id}`)}
+                      className="absolute bottom-0 right-0 pb-2 mr-16 rounded-full text-gray-400 hover:text-blue-600 transition-all duration-300"
+                    >
+                      Edit
+                    </button>
+                  </>
                 )}
-            
+
                 <h3
                   onClick={() => navigate(`/articles/${article._id}`)}
                   className="text-xl font-bold mb-3 cursor-pointer hover:underline transition-all"
