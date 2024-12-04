@@ -41,4 +41,21 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
+// DELETE /api/article/:id
+
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    const article = await Article.findById(req.params.id);
+
+    if (!article) {
+      return res.status(404).json({ message: "Article not found" });
+    }
+
+    await Article.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "Article deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 export default router;

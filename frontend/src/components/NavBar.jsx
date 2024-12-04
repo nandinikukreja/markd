@@ -37,7 +37,7 @@ const NavBar = () => {
               to="/"
               className="transform hover:scale-105 transition-transform duration-200"
             >
-              <img src="Markd.gif" alt="Logo" className="h-12 w-auto" />
+              <img src="/Markd.gif" alt="Logo" className="h-12 w-auto" />
             </Link>
           </div>
 
