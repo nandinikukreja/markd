@@ -24,6 +24,28 @@ const Article = () => {
       });
   }, [id]);
 
+  const handleUpvote = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/articles/${id}/upvote`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const updatedArticle = await response.json();
+        setArticle(article => ({ ...article, upvotes: updatedArticle.upvotes }));
+      } else {
+        console.error("Failed to upvote");
+      }
+    } catch (err) {
+      console.error("Error:", error);
+    }
+  };
+
   if (loading) {
     return (
       <div className="max-w-3xl mx-auto py-4 sm:py-8 px-4 sm:px-6 animate-pulse">
@@ -126,6 +148,15 @@ const Article = () => {
           </button>
         )}
       </article>
+      <div className="flex items-center gap-2">
+        <button
+          onClick={handleUpvote}
+          className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+        >
+          Upvote
+        </button>
+        <span>{article.upvotes} Upvotes</span>
+      </div>
     </div>
   );
 };

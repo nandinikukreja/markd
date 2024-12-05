@@ -15,6 +15,10 @@ const articleSchema = new mongoose.Schema({
         required: true,
     },
     tags: [String],
+    upvotes: {
+        type: Number,
+        default: 0,
+    },
     createdAt: {
         type: Date,
         default: Date.now,
