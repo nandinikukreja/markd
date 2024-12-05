@@ -10,12 +10,14 @@ const EditArticle = () => {
     tags: "",
   });
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchArticle = async () => {
       const token = localStorage.getItem("token");
 
       try {
-        const res = await fetch(
+        const response = await fetch(
           `${import.meta.env.VITE_API_URL}/api/articles/${id}`,
           {
             headers: {
@@ -24,26 +26,30 @@ const EditArticle = () => {
           }
         );
 
-        if (res.status === 401) {
+        if (response.status === 401) {
           navigate("/signin");
           return;
         }
 
-        if (!res.ok) {
+        if (!response.ok) {
           throw new Error("Failed to fetch article");
         }
 
-        const article = await res.json();
+        const article = await response.json();
 
         setFormData({
           title: article.title,
           content: article.content,
           tags: article.tags.join(", "),
         });
+        setLoading(false);
       } catch (err) {
         console.error(err);
+        setLoading(false);
       }
     };
+
+    fetchArticle();
   }, [id, navigate]);
 
   const handleSubmit = async (e) => {
@@ -51,17 +57,20 @@ const EditArticle = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/articles/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          ...formData,
-          tags: formData.tags.split(",").map((tag) => tag.trim()),
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/articles/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            ...formData,
+            tags: formData.tags.split(",").map((tag) => tag.trim()),
+          }),
+        }
+      );
 
       if (response.ok) {
         navigate(`/articles/${id}`);
@@ -80,14 +89,29 @@ const EditArticle = () => {
     }));
   };
 
+  if(loading) {
+    return (
+      <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
+          <h1 className="text-4xl font-bold mb-8">Loading...</h1>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <div className="bg-white rounded-2xl shadow-lg p-8">
-        <h1 className="text-4xl font-bold mb-8 text-center">Edit Your Article</h1>
+        <h1 className="text-4xl font-bold mb-8 text-center">
+          Edit Your Article
+        </h1>
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Title */}
           <div>
-            <label htmlFor="title" className="block text-lg font-semibold text-gray-700 mb-2">
+            <label
+              htmlFor="title"
+              className="block text-lg font-semibold text-gray-700 mb-2"
+            >
               Title
             </label>
             <input
@@ -104,7 +128,10 @@ const EditArticle = () => {
 
           {/* Content */}
           <div>
-            <label htmlFor="content" className="block text-lg font-semibold text-gray-700 mb-2">
+            <label
+              htmlFor="content"
+              className="block text-lg font-semibold text-gray-700 mb-2"
+            >
               Content
             </label>
             <textarea
@@ -121,7 +148,10 @@ const EditArticle = () => {
 
           {/* Tags */}
           <div>
-            <label htmlFor="tags" className="block text-lg font-semibold text-gray-700 mb-2">
+            <label
+              htmlFor="tags"
+              className="block text-lg font-semibold text-gray-700 mb-2"
+            >
               Tags
             </label>
             <input
