@@ -7,7 +7,13 @@ const router = express.Router();
 // GET /api/articles
 router.get("/", auth, async (req, res) => {
   try {
-    const articles = await Article.find().populate("author", "name");
+    const sortOption = req.query.sort;
+    let sortCriteria = { createdAt: -1 };
+    if(sortOption === "most-upvotes") {
+      sortCriteria = { upvotes: -1 };
+    }
+
+    const articles = await Article.find().populate("author", "name").sort(sortCriteria);
     res.status(200).json(articles);
   } catch (err) {
     res.status(500).json(err);
