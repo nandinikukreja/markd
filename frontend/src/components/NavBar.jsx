@@ -34,7 +34,7 @@ const NavBar = () => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link
-              to="/"
+              to={token ? "/dashboard" : "/"}
               className="transform hover:scale-105 transition-transform duration-200"
             >
               <img src="/Markd.gif" alt="Logo" className="h-12 w-auto" />
