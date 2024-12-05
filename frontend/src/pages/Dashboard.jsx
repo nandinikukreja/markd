@@ -6,40 +6,68 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
   const [sortOption, setSortOption] = useState("latest");
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
+  // frontend/src/pages/Dashboard.jsx
+
+  const fetchArticles = async () => {
+    const token = localStorage.getItem("token");
+    const url = `${
+      import.meta.env.VITE_API_URL
+    }/api/articles?sort=${sortOption}&page=${page}`;
+
+    try {
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+
+      // Use a Set to track unique IDs and filter out duplicates
+      setArticles((prevArticles) => {
+        const existingIds = new Set(prevArticles.map((article) => article._id));
+        const uniqueNewArticles = data.filter(
+          (article) => !existingIds.has(article._id)
+        );
+        return [...prevArticles, ...uniqueNewArticles];
+      });
+
+      // Check if more articles are available
+      if (data.length < 10) {
+        setHasMore(false);
+      }
+    } catch (err) {
+      console.error("Error fetching articles:", err);
+    }
+  };
 
   useEffect(() => {
-    const fetchArticles = async () => {
-      const token = localStorage.getItem("token");
-      const url = `${
-        import.meta.env.VITE_API_URL
-      }/api/articles?sort=${sortOption}`;
+    setArticles([]);
+    setPage(1);
+    setHasMore(true);
+    fetchArticles();
+  }, [sortOption]);
 
-      try {
-        const response = await fetch(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  useEffect(() => {
+    fetchArticles();
+  }, [page]);
 
-        if (response.status === 401) {
-          navigate("/signin");
-          return;
-        }
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setArticles(Array.isArray(data) ? data : []);
-      } catch (err) {
-        console.error("Error fetching articles:", err);
-        setArticles([]);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        !hasMore ||
+        window.innerHeight + window.scrollY < document.body.offsetHeight - 500
+      ) {
+        return;
       }
+      setPage((prevPage) => prevPage + 1);
     };
 
-    fetchArticles();
-  }, [navigate, sortOption]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasMore]);
 
   return (
     <div className="min-h-screen bg-gray-50">

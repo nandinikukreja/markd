@@ -9,11 +9,18 @@ router.get("/", auth, async (req, res) => {
   try {
     const sortOption = req.query.sort;
     let sortCriteria = { createdAt: -1 };
-    if(sortOption === "most-upvotes") {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
+
+    if (sortOption === "most-upvotes") {
       sortCriteria = { upvotes: -1 };
     }
 
-    const articles = await Article.find().populate("author", "name").sort(sortCriteria);
+    const articles = await Article.find()
+      .populate("author", "name")
+      .sort(sortCriteria)
+      .skip(limit * (page - 1))
+      .limit(limit);
     res.status(200).json(articles);
   } catch (err) {
     res.status(500).json(err);
@@ -90,8 +97,7 @@ router.put("/:id", auth, async (req, res) => {
 
     await article.save();
     res.status(200).json(article);
-  }
-  catch (err) {
+  } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -101,14 +107,12 @@ router.put("/:id", auth, async (req, res) => {
 router.put("/:id/upvote", auth, async (req, res) => {
   try {
     const article = await Article.findById(req.params.id);
-    if(!article)
-      return res.status(404).json({ message: "Article not found" });
+    if (!article) return res.status(404).json({ message: "Article not found" });
 
     article.upvotes += 1;
     await article.save();
     res.status(200).json(article);
-  }
-  catch (err) {
+  } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 });
