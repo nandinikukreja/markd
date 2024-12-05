@@ -46,3 +46,34 @@
 .animate-confirm {
   animation: confirm 0.3s forwards;
 }
+
+/* Add these gradient animations */
+.gold-gradient {
+  @apply bg-gradient-to-r from-yellow-500 via-yellow-200 to-yellow-500 
+    text-transparent bg-clip-text bg-300% animate-gradient;
+}
+
+.silver-gradient {
+  @apply bg-gradient-to-r from-gray-400 via-gray-100 to-gray-400
+    text-transparent bg-clip-text bg-300% animate-gradient;
+}
+
+.bronze-gradient {
+  @apply bg-gradient-to-r from-amber-700 via-amber-500 to-amber-700
+    text-transparent bg-clip-text bg-300% animate-gradient;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@layer utilities {
+  .bg-300\% {
+    background-size: 300% 300%;
+  }
+  .animate-gradient {
+    animation: gradient 6s ease infinite;
+  }
+}
