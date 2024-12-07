@@ -39,14 +39,14 @@ Markd is a content platform that enables users to share their expertise through 
 
 ## Tech Stack
 
-<summary>Frontend</summary>
+### Frontend
 
 - [React](https://reactjs.org/) - UI library
 - [React Router](https://reactrouter.com/) - Navigation
 - [Tailwind CSS](https://tailwindcss.com/) - Styling
 - [Vite](https://vitejs.dev/) - Build tool
 
-<summary>Backend</summary>
+### Backend
 
 - [Node.js](https://nodejs.org/) - Runtime environment
 - [Express.js](https://expressjs.com/) - Web framework
