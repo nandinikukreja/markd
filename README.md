@@ -30,17 +30,17 @@ Markd is a content platform that enables users to share their expertise through 
   - Markdown support
   - Draft saving -->
 
-- 👥 **User Profiles**
+- **User Profiles**
 
   - Customizable user profiles
   - Article portfolios
 
-- 🎨 **Modern UI/UX**
+- **Modern UI/UX**
   - Responsive design
   - Intuitive navigation
   - Loading states
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 <summary>Frontend</summary>
 
