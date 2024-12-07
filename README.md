@@ -1,212 +1,154 @@
 # Markd
 
+<div align="center">
+
 ![Banner Image](./frontend/public/MarkdBannerImg.png)
 
-Markd is a platform for people who love sharing their knowledge with everyone. It allows users to write and read articles on various topics, connect with others, and discover new ideas.
+_A modern platform for knowledge sharing and discovery_
 
-## Table of Contents
+[Demo](http://ec2-13-61-7-254.eu-north-1.compute.amazonaws.com:8080/) · [Report Bug](https://github.com/harshpreet931/markd/issues) · [Request Feature](https://github.com/harshpreet931/markd/issues)
 
-- Features
-- Technologies Used
-- Directory Structure
-- Prerequisites
-- Installation
-- Environment Variables
-- Running the App
-- Basic Flow
-- Contributing
-- License
-- Acknowledgments
+</div>
 
-## Features
+## Overview
 
-- User authentication and authorization (sign up, sign in)
-- Create, read, update, and delete articles
-- Upvote articles
-- View user profiles and their articles
-- Responsive design
+Markd is a content platform that enables users to share their expertise through beautifully crafted articles. Built with modern web technologies, it offers a seamless writing and reading experience with features like real-time article updates, user authentication, and social interactions.
 
-## Technologies Used
+## Key Features
 
-### Frontend
+- **Secure Authentication System**
 
-- React
-- React Router DOM
-- Tailwind CSS
-- Vite
+  - JWT-based authentication
+  - Protected routes
+  - Secure password hashing
+  - Session management
 
-### Backend
+<!-- - **Rich Content Management**
 
-- Node.js
-- Express.js
-- MongoDB & Mongoose
-- JWT Authentication
-- bcrypt
+  - Create and edit articles
+  - Tag-based organization
+  - Markdown support
+  - Draft saving -->
 
-## Directory Structure
+- 👥 **User Profiles**
 
-```
-backend/
-    index.js
-    package.json
-    .env
-    .gitignore
-    middleware/
-        auth.js
-    models/
-        Article.js
-        User.js
-    routes/
-        articles.js
-        auth.js
-        users.js
-frontend/
-    index.html
-    package.json
-    .env
-    .gitignore
-    public/
-        MarkdBannerImg.png
-        Markd.svg
-        Markd.gif
-    src/
-        App.jsx
-        main.jsx
-        index.css
-        components/
-            NavBar.jsx
-            Modal.jsx
-            ArticleSkeleton.jsx
-            ...
-        pages/
-            HomePage.jsx
-            GetStarted.jsx
-            SignIn.jsx
-            UserProfile.jsx
-            Article.jsx
-            NewArticle.jsx
-            ...
-    tailwind.config.js
-    vite.config.js
-README.md
-```
+  - Customizable user profiles
+  - Article portfolios
+
+- 🎨 **Modern UI/UX**
+  - Responsive design
+  - Intuitive navigation
+  - Loading states
+
+## 🛠️ Tech Stack
+
+<summary>Frontend</summary>
+
+- [React](https://reactjs.org/) - UI library
+- [React Router](https://reactrouter.com/) - Navigation
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Vite](https://vitejs.dev/) - Build tool
+
+<summary>Backend</summary>
+
+- [Node.js](https://nodejs.org/) - Runtime environment
+- [Express.js](https://expressjs.com/) - Web framework
+- [MongoDB](https://www.mongodb.com/) - Database
+- [JWT](https://jwt.io/) - Authentication
+- [bcrypt](https://github.com/kelektiv/node.bcrypt.js) - Password hashing
+
 
 ## Prerequisites
 
-- Node.js (v14.x or higher)
-- MongoDB instance (local or cloud-based)
+```json
+{
+  "node": ">=14.x",
+  "npm": ">=6.x",
+  "mongodb": ">=4.x" // can be local or cloud-based.
+}
+```
 
-## Installation
+## Quick Start
 
-1. **Clone the repository**
+1. **Clone and Install**
 
-   ```bash
-   git clone https://github.com/yourusername/markd.git
-   cd markd
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/markd.git
 
-2. **Install dependencies for both frontend and backend**
+# Install dependencies
+cd markd
+npm install
+```
 
-   ```bash
-   # Navigate to the backend directory and install dependencies
-   cd backend
-   npm install
+2. **Environment Setup**
 
-   # Navigate to the frontend directory and install dependencies
-   cd ../frontend
-   npm install
-   ```
-
-## Environment Variables
-
-### Backend
-
-Create a `.env` file inside the 
-
-backend
-
- directory with the following variables:
-
-```env
+```bash
+# Backend (.env)
 PORT=8081
 DB_CONNECTION_STRING=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
-```
 
-- **PORT**: The port number on which the backend server will run (default is `8081`).
-- **DB_CONNECTION_STRING**: Your MongoDB connection string.
-- **JWT_SECRET**: A secret key for JWT authentication.
-
-### Frontend
-
-Create a `.env` file inside the 
-
-frontend
-
- directory with the following variables:
-
-```env
+# Frontend (.env)
 VITE_API_URL=http://localhost:8081
 ```
 
-- **VITE_API_URL**: The URL where the backend API is running.
+3. **Development**
 
-## Running the App
+```bash
+# Terminal 1 - Backend
+cd backend
+node start index.js
 
-### Backend
+# Terminal 2 - Frontend
+cd frontend
+npm run dev
+```
 
-**Starting the backend server**
+Visit `http://localhost:5173` to see the app in action.
 
-   ```bash
-   cd backend
-   node index.js
-   ```
+## Project Structure
 
-   The backend server will start on `http://localhost:8081`.
+```
+markd/
+├── backend/                # Backend source code
+│   ├── middleware/        # Authentication middleware
+│   ├── models/           # Database models
+│   └── routes/           # API routes
+└── frontend/             # Frontend source code
+    ├── public/           # Static assets
+    └── src/
+        ├── components/   # Reusable components
+        ├── pages/        # Page components
+        └── routes/       # Route definitions
+```
 
-### Frontend
+## Application Flow
 
-**Starting the frontend development server**
+1. **Authentication**
 
-   ```bash
-   cd frontend
-   npm run dev
-   ```
+   - User registration with email verification
+   - JWT-based authentication
+   - Protected route handling
 
-   The frontend app will start on `http://localhost:5173`.
+2. **Content Management**
 
-## Basic Flow
+   - Article creation
+   - Image upload and management
+   - Tag system for categorization
 
-1. **Home Page**
+3. **User Interactions**
+   - Article upvoting system
+   - User following mechanism
 
-   - Visitors can view the landing page with information about the platform.
-   - Options to sign up or sign in are available.
+## Acknowledgments
 
-2. **User Registration and Authentication**
+- [React Documentation](https://reactjs.org/docs)
+- [Tailwind CSS](https://tailwindcss.com)
+- [MongoDB Documentation](https://docs.mongodb.com)
 
-   - Users can sign up using their name, email, and password.
-   - Authentication is handled using JWT tokens.
+---
 
-3. **Dashboard**
-
-   - Once logged in, users are redirected to the dashboard where they can see a list of articles.
-   - Users can sort articles by the latest or most upvoted.
-
-4. **Creating an Article**
-
-   - Users can write a new article by navigating to the "Write" page.
-   - Articles can include a title, content, and tags.
-
-5. **Viewing Articles**
-
-   - Users can read articles written by others.
-   - Articles display the author's information, content, and tags.
-
-6. **Upvoting Articles**
-
-   - Logged-in users can upvote articles.
-
-7. **User Profiles**
-
-   - Users can view their profile, edit their information, and see the articles they've written.
-   - Users can visit other users' profiles to see their articles.
+<div align="center">
+Made with ❤️ by <a href="https://linkedin.com/in/harshpreet931">Harshpreet Singh</a>
+</div>
