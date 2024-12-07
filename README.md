@@ -15,30 +15,28 @@ _A modern platform for knowledge sharing and discovery._
 Markd is a content platform that enables users to share their expertise through beautifully crafted articles. Built with modern web technologies, it offers a seamless writing and reading experience with features like real-time article updates, user authentication, and social interactions.
 
 ## Key Features
+## Key Features
 
 - **Secure Authentication System**
+    - JWT-based authentication
+    - Protected routes
+    - Secure password hashing
+    - Session management
 
-  - JWT-based authentication
-  - Protected routes
-  - Secure password hashing
-  - Session management
+- **Article Management**
+    - Create/Edit/Delete articles
+    - Upvoting system
+    - Tag-based organization
 
-<!-- - **Rich Content Management**
-
-  - Create and edit articles
-  - Tag-based organization
-  - Markdown support
-  - Draft saving -->
-
-- **User Profiles**
-
-  - Customizable user profiles
-  - Article portfolios
+- **User Features**
+    - Custom profiles
+    - Article portfolios
+    - Bio management
 
 - **Modern UI/UX**
-  - Responsive design
-  - Intuitive navigation
-  - Loading states
+    - Responsive design
+    - Intuitive navigation
+    - Loading states
 
 ## Tech Stack
 
