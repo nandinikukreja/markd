@@ -19,21 +19,26 @@ const GetStarted = () => {
     const password = formData.password;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-    if(!passwordRegex.test(password)) {
-      setModalMessage("Password must contain at least 8 characters, including one letter and one number.");
+    if (!passwordRegex.test(password)) {
+      setModalMessage(
+        "Password must contain at least 8 characters, including one letter and one number."
+      );
       setShowModal(true);
       setModalAction(null);
       return;
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         setModalMessage("Account created successfully! Please sign in.");
@@ -140,6 +145,9 @@ const GetStarted = () => {
                   onChange={handleChange}
                   value={formData.password}
                 />
+                <p className="mt-1 text-sm text-gray-600">
+                  Must be at least 8 characters and contain letters and numbers.
+                </p>
               </div>
             </div>
 
