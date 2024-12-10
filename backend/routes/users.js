@@ -8,13 +8,20 @@ const router = express.Router();
 // POST /api/users
 router.post("/", async (req, res) => {
   try {
-    const { password } = req.body;
+    const { email, password } = req.body;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
         message:
           "Password must contain at least 8 characters, including one letter and one number.",
+      });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if(existingUser) {
+      return res.status(400).json({
+        message: "User with this email already exists."
       });
     }
 
