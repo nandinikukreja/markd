@@ -16,6 +16,16 @@ const GetStarted = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const password = formData.password;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+    if(!passwordRegex.test(password)) {
+      setModalMessage("Password must contain at least 8 characters, including one letter and one number.");
+      setShowModal(true);
+      setModalAction(null);
+      return;
+    }
+
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
         method: "POST",
