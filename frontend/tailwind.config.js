@@ -8,19 +8,23 @@ export default {
       typography: {
         DEFAULT: {
           css: {
-            'code::before': {
-              content: '""'
+            'code::before': { content: '""' },
+            'code::after': { content: '""' },
+            'code': {
+              backgroundColor: '#f4f4f4',
+              padding: '0.2rem 0.4rem',
+              borderRadius: '0.25rem',
+              fontFamily: '"Monaco", "Courier New", monospace'
             },
-            'code::after': {
-              content: '""'
+            'pre': {
+              backgroundColor: '#f4f4f4',
+              padding: '1rem',
+              borderRadius: '0.5rem',
+              fontFamily: '"Monaco", "Courier New", monospace'
             },
-            'blockquote p:first-of-type::before': {
-              content: '""'
-            },
-            'blockquote p:last-of-type::after': {
-              content: '""'
-            },
-            maxWidth: 'none',
+            '.ql-font-monospace': {
+              fontFamily: '"Monaco", "Courier New", monospace !important'
+            }
           }
         }
       }

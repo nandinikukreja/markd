@@ -8,34 +8,26 @@ const router = express.Router();
 const sanitizeOptions = {
   allowedTags: [
     ...sanitizeHtml.defaults.allowedTags,
-    "h1",
-    "h2",
-    "h3",
-    "pre",
-    "code",
-    "span",
+    'h1', 'h2', 'h3', 'pre', 'code', 'span'
   ],
   allowedAttributes: {
     ...sanitizeHtml.defaults.allowedAttributes,
-    "*": ["style", "class"],
-    code: ["class"],
-    pre: ["class"],
-    span: ["class"],
+    '*': ['style', 'class'],
+    'code': ['class'],
+    'pre': ['class'],
+    'span': ['class', 'style'],
   },
   allowedStyles: {
-    "*": {
-      color: [
-        /^#(0x)?[0-9a-f]+$/i,
-        /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/,
-      ],
-      "font-family": [/.*/],
-      "font-size": [/.*/],
-      "font-weight": [/.*/],
-      "text-align": [/.*/],
-      "text-decoration": [/.*/],
-      "background-color": [/.*/],
-    },
-  },
+    '*': {
+      'color': [/^#(0x)?[0-9a-f]+$/i, /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/],
+      'font-family': [/.*/],
+      'font-size': [/.*/],
+      'font-weight': [/.*/],
+      'text-align': [/.*/],
+      'text-decoration': [/.*/],
+      'background-color': [/.*/],
+    }
+  }
 };
 
 // GET /api/articles

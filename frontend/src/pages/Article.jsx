@@ -143,7 +143,7 @@ const Article = () => {
 
           {/* Content */}
           <div className="prose prose-lg max-w-none prose-pre:bg-gray-100 prose-pre:p-4 prose-pre:rounded-lg prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-headings:text-gray-900 prose-a:text-blue-600 hover:prose-a:text-blue-500">
-            <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
+            <div dangerouslySetInnerHTML={{ __html: sanitizedContent }}  className="ql-editor"/>
           </div>
 
           {/* Tags and Actions */}

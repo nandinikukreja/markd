@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const NewArticle = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    tags: '',
+    title: "",
+    content: "",
+    tags: "",
   });
 
   const handleContentChange = (value) => {
@@ -27,29 +27,32 @@ const NewArticle = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/articles`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          ...formData,
-          tags: formData.tags.split(',').map((tag) => tag.trim()),
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/articles`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            ...formData,
+            tags: formData.tags.split(",").map((tag) => tag.trim()),
+          }),
+        }
+      );
 
       if (response.ok) {
         const article = await response.json();
         navigate(`/articles/${article._id}`);
       } else {
-        console.error('Failed to create article');
+        console.error("Failed to create article");
       }
     } catch (err) {
-      console.error('Network error:', err);
+      console.error("Network error:", err);
     }
   };
 
@@ -58,7 +61,10 @@ const NewArticle = () => {
       <form onSubmit={handleSubmit}>
         {/* Title Input */}
         <div className="mb-6">
-          <label htmlFor="title" className="block text-lg font-semibold text-gray-700 mb-2">
+          <label
+            htmlFor="title"
+            className="block text-lg font-semibold text-gray-700 mb-2"
+          >
             Title
           </label>
           <input
@@ -75,36 +81,57 @@ const NewArticle = () => {
 
         {/* Content Input */}
         <div className="mb-6">
-          <label htmlFor="content" className="block text-lg font-semibold text-gray-700 mb-2">
+          <label
+            htmlFor="content"
+            className="block text-lg font-semibold text-gray-700 mb-2"
+          >
             Content
           </label>
           <ReactQuill
-            theme='snow'
+            theme="snow"
             value={formData.content}
             onChange={handleContentChange}
             placeholder="Write your article..."
             modules={{
               toolbar: [
-                [{ header: '1' }, { header: '2' }, { font: [] }],
+                [{ header: "1" }, { header: "2" }, { font: [] }],
                 [{ size: [] }],
-                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                [{ list: 'ordered' }, { list: 'bullet' }],
-                ['link'],
-                ['clean'],
+                [
+                  "bold",
+                  "italic",
+                  "underline",
+                  "strike",
+                  "blockquote",
+                  "code-block",
+                ],
+                [{ list: "ordered" }, { list: "bullet" }],
+                ["link"],
+                ["clean"],
               ],
             }}
             formats={[
-              'header', 'font', 'size',
-              'bold', 'italic', 'underline', 'strike', 'blockquote',
-              'list', 'bullet',
-              'link',
+              "header",
+              "font",
+              "size",
+              "bold",
+              "italic",
+              "underline",
+              "strike",
+              "blockquote",
+              "code-block",
+              "list",
+              "bullet",
+              "link",
             ]}
           />
         </div>
 
         {/* Tags Input */}
         <div className="mb-6">
-          <label htmlFor="tags" className="block text-lg font-semibold text-gray-700 mb-2">
+          <label
+            htmlFor="tags"
+            className="block text-lg font-semibold text-gray-700 mb-2"
+          >
             Tags
           </label>
           <input
