@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const NewArticle = () => {
   const navigate = useNavigate();
@@ -9,22 +11,32 @@ const NewArticle = () => {
     tags: "",
   });
 
+  const handleContentChange = (v) => {
+    setFormData({
+      ...formData,
+      content: v,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/articles`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          ...formData,
-          tags: formData.tags.split(",").map((tag) => tag.trim()),
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/articles`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            ...formData,
+            tags: formData.tags.split(",").map((tag) => tag.trim()),
+          }),
+        }
+      );
 
       if (response.ok) {
         const article = await response.json();
@@ -47,13 +59,56 @@ const NewArticle = () => {
 
   return (
     <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <div>
+        <label
+          htmlFor="content"
+          className="block text-lg font-semibold text-gray-700 mb-2"
+        >
+          Content
+        </label>
+        <ReactQuill
+          theme="snow"
+          value={formData.content}
+          onChange={handleContentChange}
+          placeholder="Edit your story..."
+          modules={{
+            toolbar: [
+              [{ header: "1" }, { header: "2" }, { font: [] }],
+              [{ size: [] }],
+              ["bold", "italic", "underline", "strike", "blockquote"],
+              [{ list: "ordered" }, { list: "bullet" }],
+              ["link"],
+              ["clean"],
+            ],
+          }}
+          formats={[
+            "header",
+            "font",
+            "size",
+            "bold",
+            "italic",
+            "underline",
+            "strike",
+            "blockquote",
+            "list",
+            "bullet",
+            "link",
+          ]}
+          className="mb-8"
+        />
+      </div>
       <div className="bg-white rounded-2xl shadow-lg p-8">
-        <h1 className="text-4xl font-bold mb-8 text-center">Write Your Story</h1>
-        
+        <h1 className="text-4xl font-bold mb-8 text-center">
+          Write Your Story
+        </h1>
+
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Title */}
           <div>
-            <label htmlFor="title" className="block text-lg font-semibold text-gray-700 mb-2">
+            <label
+              htmlFor="title"
+              className="block text-lg font-semibold text-gray-700 mb-2"
+            >
               Title
             </label>
             <input
@@ -70,7 +125,10 @@ const NewArticle = () => {
 
           {/* Content */}
           <div>
-            <label htmlFor="content" className="block text-lg font-semibold text-gray-700 mb-2">
+            <label
+              htmlFor="content"
+              className="block text-lg font-semibold text-gray-700 mb-2"
+            >
               Content
             </label>
             <textarea
@@ -87,7 +145,10 @@ const NewArticle = () => {
 
           {/* Tags */}
           <div>
-            <label htmlFor="tags" className="block text-lg font-semibold text-gray-700 mb-2">
+            <label
+              htmlFor="tags"
+              className="block text-lg font-semibold text-gray-700 mb-2"
+            >
               Tags
             </label>
             <input
