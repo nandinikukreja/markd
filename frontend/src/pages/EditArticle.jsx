@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const EditArticle = () => {
   const { id } = useParams();
@@ -11,6 +13,13 @@ const EditArticle = () => {
   });
 
   const [loading, setLoading] = useState(true);
+
+  const handleContentChange = (value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      content: value,
+    }));
+  };
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -89,7 +98,7 @@ const EditArticle = () => {
     }));
   };
 
-  if(loading) {
+  if (loading) {
     return (
       <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
@@ -134,16 +143,44 @@ const EditArticle = () => {
             >
               Content
             </label>
-            <textarea
-              id="content"
-              name="content"
-              rows="12"
-              required
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent transition-all"
-              placeholder="Edit your story..."
-              onChange={handleChange}
+            <ReactQuill
+              theme="snow"
               value={formData.content}
-            ></textarea>
+              onChange={handleContentChange}
+              placeholder="Edit your story..."
+              modules={{
+                toolbar: [
+                  [{ header: "1" }, { header: "2" }, { font: [] }],
+                  [{ size: [] }],
+                  [
+                    "bold",
+                    "italic",
+                    "underline",
+                    "strike",
+                    "blockquote",
+                    "code-block",
+                  ],
+                  [{ list: "ordered" }, { list: "bullet" }],
+                  ["link"],
+                  ["clean"],
+                ],
+              }}
+              formats={[
+                "header",
+                "font",
+                "size",
+                "bold",
+                "italic",
+                "underline",
+                "strike",
+                "blockquote",
+                "code-block",
+                "list",
+                "bullet",
+                "link",
+              ]}
+              className="mb-6"
+            />
           </div>
 
           {/* Tags */}
