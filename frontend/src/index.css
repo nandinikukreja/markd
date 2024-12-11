@@ -103,3 +103,24 @@ code {
   padding: 0.2rem 0.4rem;
   border-radius: 0.25rem;
 }
+
+/* Add these to your index.css */
+.ql-editor {
+  padding: 0 !important;
+}
+
+.ql-editor p {
+  margin: 0 !important;
+}
+
+.line-clamp-3 .ql-editor {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Style for monospace text */
+.ql-font-monospace {
+  font-family: Monaco, Courier New, monospace !important;
+}

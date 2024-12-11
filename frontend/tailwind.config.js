@@ -8,23 +8,13 @@ export default {
       typography: {
         DEFAULT: {
           css: {
+            maxWidth: 'none',
+            p: {
+              marginTop: '0',
+              marginBottom: '0',
+            },
             'code::before': { content: '""' },
             'code::after': { content: '""' },
-            'code': {
-              backgroundColor: '#f4f4f4',
-              padding: '0.2rem 0.4rem',
-              borderRadius: '0.25rem',
-              fontFamily: '"Monaco", "Courier New", monospace'
-            },
-            'pre': {
-              backgroundColor: '#f4f4f4',
-              padding: '1rem',
-              borderRadius: '0.5rem',
-              fontFamily: '"Monaco", "Courier New", monospace'
-            },
-            '.ql-font-monospace': {
-              fontFamily: '"Monaco", "Courier New", monospace !important'
-            }
           }
         }
       }
@@ -33,5 +23,4 @@ export default {
   plugins: [
     require('@tailwindcss/typography'),
   ],
-
 }
