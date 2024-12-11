@@ -46,7 +46,10 @@ const Article = () => {
       );
       if (response.ok) {
         const updatedArticle = await response.json();
-        setArticle(article => ({ ...article, upvotes: updatedArticle.upvotes }));
+        setArticle((article) => ({
+          ...article,
+          upvotes: updatedArticle.upvotes,
+        }));
       } else {
         console.error("Failed to upvote");
       }
@@ -61,7 +64,7 @@ const Article = () => {
         <div className="bg-white rounded-2xl shadow-sm p-8 animate-pulse space-y-8">
           {/* Title skeleton */}
           <div className="h-10 sm:h-14 bg-gray-200 rounded-xl w-3/4"></div>
-          
+
           {/* Author info skeleton */}
           <div className="flex items-center gap-4 border-b border-gray-100 pb-8">
             <div className="w-12 h-12 bg-gray-200 rounded-full"></div>
@@ -70,7 +73,7 @@ const Article = () => {
               <div className="h-3 bg-gray-200 rounded w-24"></div>
             </div>
           </div>
-          
+
           {/* Content skeleton */}
           <div className="space-y-4">
             <div className="h-4 bg-gray-200 rounded w-full"></div>
@@ -87,12 +90,14 @@ const Article = () => {
     return (
       <div className="min-h-[70vh] flex items-center justify-center">
         <div className="text-center space-y-4">
-          <h2 className="text-3xl font-bold text-gray-800">Article not found</h2>
+          <h2 className="text-3xl font-bold text-gray-800">
+            Article not found
+          </h2>
           <p className="text-gray-600 max-w-md mx-auto">
             The article you're looking for doesn't exist or has been removed.
           </p>
-          <button 
-            onClick={() => navigate('/dashboard')}
+          <button
+            onClick={() => navigate("/dashboard")}
             className="mt-4 px-6 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition-all duration-300"
           >
             Return to Dashboard
@@ -113,14 +118,14 @@ const Article = () => {
 
           {/* Author info */}
           <div className="flex items-center gap-4 border-b border-gray-100 pb-8">
-            <div 
+            <div
               onClick={() => navigate(`/users/${article.author._id}`)}
               className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-xl font-medium text-gray-700 cursor-pointer hover:bg-gray-200 transition-colors"
             >
               {article.author.name.charAt(0)}
             </div>
             <div className="space-y-1">
-              <h3 
+              <h3
                 onClick={() => navigate(`/users/${article.author._id}`)}
                 className="font-medium text-gray-900 cursor-pointer hover:text-gray-700"
               >
@@ -130,14 +135,14 @@ const Article = () => {
                 {new Date(article.createdAt).toLocaleDateString("en-US", {
                   month: "long",
                   day: "numeric",
-                  year: "numeric"
+                  year: "numeric",
                 })}
               </p>
             </div>
           </div>
 
           {/* Content */}
-          <div className="prose prose-lg max-w-none">
+          <div className="prose prose-lg max-w-none prose-pre:bg-gray-100 prose-pre:p-4 prose-pre:rounded-lg prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-headings:text-gray-900 prose-a:text-blue-600 hover:prose-a:text-blue-500">
             <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
           </div>
 
@@ -155,20 +160,25 @@ const Article = () => {
                 ))}
               </div>
             )}
-            
+
             <div className="flex items-center gap-4">
               <button
                 onClick={handleUpvote}
                 className="px-6 py-2 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-full hover:from-gray-900 hover:to-black transition-all duration-300 flex items-center gap-2 group"
               >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  className="h-5 w-5 transform group-hover:scale-110 transition-transform" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 transform group-hover:scale-110 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 15l7-7 7 7"
+                  />
                 </svg>
                 <span>Upvote • {article.upvotes}</span>
               </button>
@@ -178,14 +188,19 @@ const Article = () => {
                   onClick={() => navigate(`/edit-article/${article._id}`)}
                   className="px-6 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors flex items-center gap-2"
                 >
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="h-5 w-5" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                    />
                   </svg>
                   <span>Edit Article</span>
                 </button>
