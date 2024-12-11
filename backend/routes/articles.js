@@ -1,6 +1,7 @@
 import express from "express";
 import Article from "../models/Article.js";
 import auth from "../middleware/auth.js";
+import sanitizeHtml from "sanitize-html";
 
 const router = express.Router();
 
@@ -43,8 +44,14 @@ router.get("/:id", auth, async (req, res) => {
 // POST /api/articles
 router.post("/", auth, async (req, res) => {
   try {
+    const sanitizedContent = sanitizeHtml(req.body.content, {
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h1', 'h2']),
+      allowedAttributes: sanitizeHtml.defaults.allowedAttributes,
+    });
+
     const article = new Article({
       ...req.body,
+      content: sanitizedContent,
       author: req.user.userId,
     });
     await article.save();
@@ -77,28 +84,32 @@ router.delete("/:id", auth, async (req, res) => {
 
 // PUT /api/articles/:id
 
-router.put("/:id", auth, async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
   try {
     const articleId = req.params.id;
-    const updates = req.body;
-    const article = await Article.findByIdAndUpdate(articleId);
+    const article = await Article.findById(articleId);
 
     if (!article) {
-      return res.status(404).json({ message: "Article not found" });
+      return res.status(404).json({ message: 'Article not found' });
     }
 
     if (article.author.toString() !== req.user.userId) {
-      return res.status(403).json({ message: "Not authorized" });
+      return res.status(403).json({ message: 'Not authorized' });
     }
 
-    article.title = updates.title || article.title;
-    article.content = updates.content || article.content;
-    article.tags = updates.tags || article.tags;
+    const sanitizedContent = sanitizeHtml(req.body.content, {
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h1', 'h2']),
+      allowedAttributes: sanitizeHtml.defaults.allowedAttributes,
+    });
+
+    article.title = req.body.title || article.title;
+    article.content = sanitizedContent || article.content;
+    article.tags = req.body.tags || article.tags;
 
     await article.save();
     res.status(200).json(article);
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: 'Server error' });
   }
 });
 

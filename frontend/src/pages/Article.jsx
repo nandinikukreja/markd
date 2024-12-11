@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import DOMPurify from "dompurify";
 
 const Article = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [article, setArticle] = useState(null);
+  const [sanitizedContent, setSanitizedContent] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -13,9 +15,16 @@ const Article = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch the article");
+        }
+        return response.json();
+      })
       .then((data) => {
         setArticle(data);
+        const sanitized = DOMPurify.sanitize(data.content);
+        setSanitizedContent(sanitized);
         setLoading(false);
       })
       .catch((error) => {
@@ -129,13 +138,7 @@ const Article = () => {
 
           {/* Content */}
           <div className="prose prose-lg max-w-none">
-            {article.content.split("\n").map((paragraph, index) => (
-              paragraph && (
-                <p key={index} className="text-gray-800 leading-relaxed">
-                  {paragraph}
-                </p>
-              )
-            ))}
+            <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
           </div>
 
           {/* Tags and Actions */}
