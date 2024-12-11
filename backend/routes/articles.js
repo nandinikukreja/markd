@@ -5,6 +5,39 @@ import sanitizeHtml from "sanitize-html";
 
 const router = express.Router();
 
+const sanitizeOptions = {
+  allowedTags: [
+    ...sanitizeHtml.defaults.allowedTags,
+    "h1",
+    "h2",
+    "h3",
+    "pre",
+    "code",
+    "span",
+  ],
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    "*": ["style", "class"],
+    code: ["class"],
+    pre: ["class"],
+    span: ["class"],
+  },
+  allowedStyles: {
+    "*": {
+      color: [
+        /^#(0x)?[0-9a-f]+$/i,
+        /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/,
+      ],
+      "font-family": [/.*/],
+      "font-size": [/.*/],
+      "font-weight": [/.*/],
+      "text-align": [/.*/],
+      "text-decoration": [/.*/],
+      "background-color": [/.*/],
+    },
+  },
+};
+
 // GET /api/articles
 router.get("/", auth, async (req, res) => {
   try {
@@ -44,10 +77,7 @@ router.get("/:id", auth, async (req, res) => {
 // POST /api/articles
 router.post("/", auth, async (req, res) => {
   try {
-    const sanitizedContent = sanitizeHtml(req.body.content, {
-      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h1', 'h2']),
-      allowedAttributes: sanitizeHtml.defaults.allowedAttributes,
-    });
+    const sanitizedContent = sanitizeHtml(req.body.content, sanitizeOptions);
 
     const article = new Article({
       ...req.body,
@@ -84,23 +114,20 @@ router.delete("/:id", auth, async (req, res) => {
 
 // PUT /api/articles/:id
 
-router.put('/:id', auth, async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   try {
     const articleId = req.params.id;
     const article = await Article.findById(articleId);
 
     if (!article) {
-      return res.status(404).json({ message: 'Article not found' });
+      return res.status(404).json({ message: "Article not found" });
     }
 
     if (article.author.toString() !== req.user.userId) {
-      return res.status(403).json({ message: 'Not authorized' });
+      return res.status(403).json({ message: "Not authorized" });
     }
 
-    const sanitizedContent = sanitizeHtml(req.body.content, {
-      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h1', 'h2']),
-      allowedAttributes: sanitizeHtml.defaults.allowedAttributes,
-    });
+    const sanitizedContent = sanitizeHtml(req.body.content, sanitizeOptions);
 
     article.title = req.body.title || article.title;
     article.content = sanitizedContent || article.content;
@@ -109,7 +136,7 @@ router.put('/:id', auth, async (req, res) => {
     await article.save();
     res.status(200).json(article);
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
