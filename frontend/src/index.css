@@ -77,3 +77,23 @@
     animation: gradient 6s ease infinite;
   }
 }
+
+/* Add custom styles for rich text content */
+.prose pre {
+  background-color: #f3f4f6;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.prose blockquote {
+  border-left-color: #000;
+}
+
+.prose h1, .prose h2, .prose h3 {
+  font-weight: 700;
+}
