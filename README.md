@@ -71,7 +71,7 @@ Markd is a content platform that enables users to share their expertise through 
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/markd.git
+git clone https://github.com/harshpreet931/markd.git
 
 # Install dependencies
 cd markd
@@ -95,7 +95,7 @@ VITE_API_URL=http://localhost:8081
 ```bash
 # Terminal 1 - Backend
 cd backend
-node start index.js
+node index.js
 
 # Terminal 2 - Frontend
 cd frontend
