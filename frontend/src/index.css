@@ -91,6 +91,7 @@
 /* Style for code blocks */
 pre {
   background: #f4f4f4;
+  color: #1f2937;
   padding: 1rem;
   border-radius: 0.5rem;
   font-family: "Monaco", "Courier New", monospace;
@@ -100,9 +101,17 @@ pre {
 code {
   font-family: "Monaco", "Courier New", monospace;
   background: #f4f4f4;
+  color: #1f2937;
   padding: 0.2rem 0.4rem;
   border-radius: 0.25rem;
 }
+
+.ql-syntax {
+  background-color: #f3f4f6;
+  color: #111827;
+  overflow-x: auto;
+}
+
 
 /* Add these to your index.css */
 .content-article {
