@@ -57,10 +57,13 @@ const NewArticle = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-      <form onSubmit={handleSubmit}>
-        {/* Title Input */}
-        <div className="mb-6">
+    <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg p-8 mt-8">
+      <h1 className="text-3xl font-bold mb-6 text-center">
+        Write a New Article
+      </h1>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Title */}
+        <div>
           <label
             htmlFor="title"
             className="block text-lg font-semibold text-gray-700 mb-2"
@@ -74,13 +77,13 @@ const NewArticle = () => {
             onChange={handleChange}
             value={formData.title}
             className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent"
-            placeholder="Enter the title"
+            placeholder="Enter a catchy title"
             required
           />
         </div>
 
-        {/* Content Input */}
-        <div className="mb-6">
+        {/* Content (Quill) */}
+        <div>
           <label
             htmlFor="content"
             className="block text-lg font-semibold text-gray-700 mb-2"
@@ -91,7 +94,7 @@ const NewArticle = () => {
             theme="snow"
             value={formData.content}
             onChange={handleContentChange}
-            placeholder="Write your article..."
+            className="bg-white rounded-lg shadow-sm"
             modules={{
               toolbar: [
                 [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -109,25 +112,11 @@ const NewArticle = () => {
                 ["clean"],
               ],
             }}
-            formats={[
-              "header",
-              "font",
-              "size",
-              "bold",
-              "italic",
-              "underline",
-              "strike",
-              "blockquote",
-              "code-block",
-              "list",
-              "bullet",
-              "link",
-            ]}
           />
         </div>
 
-        {/* Tags Input */}
-        <div className="mb-6">
+        {/* Tags */}
+        <div>
           <label
             htmlFor="tags"
             className="block text-lg font-semibold text-gray-700 mb-2"
@@ -141,11 +130,10 @@ const NewArticle = () => {
             onChange={handleChange}
             value={formData.tags}
             className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent"
-            placeholder="Add tags separated by commas (e.g., technology, programming)"
+            placeholder="e.g., technology, programming"
           />
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full px-6 py-3 bg-black text-white text-lg font-semibold rounded-lg hover:bg-gray-800 transition-all"

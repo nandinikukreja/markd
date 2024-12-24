@@ -124,3 +124,15 @@ code {
 .ql-font-monospace {
   font-family: Monaco, Courier New, monospace !important;
 }
+
+.ql-container {
+  border-radius: 0.5rem;
+  border: none;
+}
+.ql-toolbar {
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+.ql-editor {
+  min-height: 200px;
+  border-radius: 0 0 0.5rem 0.5rem;
+}
