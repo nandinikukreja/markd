@@ -31,21 +31,27 @@ const sanitizeOptions = {
 };
 
 // GET /api/articles
+// backend/routes/articles.js
 router.get("/", auth, async (req, res) => {
   try {
-    const sortOption = req.query.sort;
-    let sortCriteria = { createdAt: -1 };
-    const page = parseInt(req.query.page) || 1;
-    const limit = 10;
+    const { sort, page, search } = req.query;
+    let query = {};
 
-    if (sortOption === "most-upvotes") {
+    if (search) {
+      query.title = { $regex: search, $options: "i" };
+    }
+    
+    let sortCriteria = { createdAt: -1 };
+    if (sort === "most-upvotes") {
       sortCriteria = { upvotes: -1 };
     }
-
-    const articles = await Article.find()
+    
+    const limit = 10;
+    const skip = (parseInt(page) - 1) * limit;
+    const articles = await Article.find(query)
       .populate("author", "name")
       .sort(sortCriteria)
-      .skip(limit * (page - 1))
+      .skip(skip)
       .limit(limit);
     res.status(200).json(articles);
   } catch (err) {

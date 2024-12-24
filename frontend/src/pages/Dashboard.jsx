@@ -26,7 +26,7 @@ const Dashboard = () => {
     const token = localStorage.getItem("token");
     const url = `${
       import.meta.env.VITE_API_URL
-    }/api/articles?sort=${sortOption}&page=${page}`;
+    }/api/articles?sort=${sortOption}&page=${page}&search=${searchQuery}`;
 
     try {
       const response = await fetch(url, {
@@ -80,6 +80,12 @@ const Dashboard = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [hasMore, loading]); // Add loading to dependencies
+
+  useEffect(() => {
+    setPage(1);
+    setArticles([]);
+    fetchArticles();
+  }, [searchQuery]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -180,7 +186,7 @@ const Dashboard = () => {
                     type="text"
                     placeholder="Search articles..."
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => {setSearchQuery(e.target.value); setPage(1); setArticles([]);}}
                     className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                   />
                   <svg
