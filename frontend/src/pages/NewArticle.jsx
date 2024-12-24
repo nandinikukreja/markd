@@ -94,7 +94,7 @@ const NewArticle = () => {
             theme="snow"
             value={formData.content}
             onChange={handleContentChange}
-            className="bg-white rounded-lg shadow-sm"
+            className="bg-white min-h-[200px]"
             modules={{
               toolbar: [
                 [{ header: "1" }, { header: "2" }, { font: [] }],

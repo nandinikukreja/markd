@@ -155,7 +155,7 @@ const Dashboard = () => {
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(article.content),
                       }}
-                      className="ql-editor"
+                      className="content-article"
                     />
                   </div>
 

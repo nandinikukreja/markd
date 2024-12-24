@@ -105,15 +105,15 @@ code {
 }
 
 /* Add these to your index.css */
-.ql-editor {
+.content-article {
   padding: 0 !important;
 }
 
-.ql-editor p {
+.content-article p {
   margin: 0 !important;
 }
 
-.line-clamp-3 .ql-editor {
+.line-clamp-3 .content-article {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -125,7 +125,15 @@ code {
   font-family: Monaco, Courier New, monospace !important;
 }
 
-.ql-container {
+.content-article {
   border-radius: 0.5rem;
   border: none;
+}
+
+/* In your index.css or a global CSS file */
+.ql-container {
+  min-height: 200px;
+}
+.ql-editor {
+  min-height: 200px;
 }
