@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
 
+/**
+ * Article Schema
+ * Represents an article in the database
+ * The Article has Title, Content, Author, Tags, Upvotes, CreatedAt.
+ */
 const articleSchema = new mongoose.Schema({
     title: {
         type: String,
