@@ -5,7 +5,11 @@ import Article from "../models/Article.js";
 
 const router = express.Router();
 
-// POST /api/users
+/**
+ * @route  POST /api/users
+ * @desc   Register a new user
+ * @access Public
+ */
 router.post("/", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -19,9 +23,9 @@ router.post("/", async (req, res) => {
     }
 
     const existingUser = await User.findOne({ email });
-    if(existingUser) {
+    if (existingUser) {
       return res.status(400).json({
-        message: "User with this email already exists."
+        message: "User with this email already exists.",
       });
     }
 
@@ -33,7 +37,11 @@ router.post("/", async (req, res) => {
   }
 });
 
-// GET /api/users/:id
+/**
+ * @route  GET /api/users/:id
+ * @desc   Get user profile and their articles by user ID
+ * @access Private
+ */
 router.get("/:id", auth, async (req, res) => {
   try {
     const userId = req.params.id;
@@ -51,7 +59,11 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-// PUT /api/users/:id
+/**
+ * @route  PUT /api/users/:id
+ * @desc   Update user profile by user ID
+ * @access Private
+ */
 router.put("/:id", auth, async (req, res) => {
   try {
     const userId = req.params.id;

@@ -8,30 +8,41 @@ const router = express.Router();
 const sanitizeOptions = {
   allowedTags: [
     ...sanitizeHtml.defaults.allowedTags,
-    'h1', 'h2', 'h3', 'pre', 'code', 'span'
+    "h1",
+    "h2",
+    "h3",
+    "pre",
+    "code",
+    "span",
   ],
   allowedAttributes: {
     ...sanitizeHtml.defaults.allowedAttributes,
-    '*': ['style', 'class'],
-    'code': ['class'],
-    'pre': ['class'],
-    'span': ['class', 'style'],
+    "*": ["style", "class"],
+    code: ["class"],
+    pre: ["class"],
+    span: ["class", "style"],
   },
   allowedStyles: {
-    '*': {
-      'color': [/^#(0x)?[0-9a-f]+$/i, /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/],
-      'font-family': [/.*/],
-      'font-size': [/.*/],
-      'font-weight': [/.*/],
-      'text-align': [/.*/],
-      'text-decoration': [/.*/],
-      'background-color': [/.*/],
-    }
-  }
+    "*": {
+      color: [
+        /^#(0x)?[0-9a-f]+$/i,
+        /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/,
+      ],
+      "font-family": [/.*/],
+      "font-size": [/.*/],
+      "font-weight": [/.*/],
+      "text-align": [/.*/],
+      "text-decoration": [/.*/],
+      "background-color": [/.*/],
+    },
+  },
 };
 
-// GET /api/articles
-// backend/routes/articles.js
+/**
+ * @route  GET /api/articles
+ * @desc   Get all articles with optional search and sorting
+ * @access Private
+ */
 router.get("/", auth, async (req, res) => {
   try {
     const { sort, page, search } = req.query;
@@ -40,12 +51,12 @@ router.get("/", auth, async (req, res) => {
     if (search) {
       query.title = { $regex: search, $options: "i" };
     }
-    
+
     let sortCriteria = { createdAt: -1 };
     if (sort === "most-upvotes") {
       sortCriteria = { upvotes: -1 };
     }
-    
+
     const limit = 10;
     const skip = (parseInt(page) - 1) * limit;
     const articles = await Article.find(query)
@@ -59,7 +70,11 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// GET /api/articles/:id
+/**
+ * @route  GET /api/articles/:id
+ * @desc   Get a single article by ID
+ * @access Private
+ */
 router.get("/:id", auth, async (req, res) => {
   try {
     const article = await Article.findById(req.params.id).populate(
@@ -72,7 +87,11 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-// POST /api/articles
+/**
+ * @route  POST /api/articles
+ * @desc   Create a new article
+ * @access Private
+ */
 router.post("/", auth, async (req, res) => {
   try {
     const sanitizedContent = sanitizeHtml(req.body.content, sanitizeOptions);
@@ -89,8 +108,11 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// DELETE /api/article/:id
-
+/**
+ * @route  DELETE /api/articles/:id
+ * @desc   Delete an article by ID
+ * @access Private
+ */
 router.delete("/:id", auth, async (req, res) => {
   try {
     const article = await Article.findById(req.params.id);
@@ -110,8 +132,11 @@ router.delete("/:id", auth, async (req, res) => {
   }
 });
 
-// PUT /api/articles/:id
-
+/**
+ * @route  PUT /api/articles/:id
+ * @desc   Update an article by ID
+ * @access Private
+ */
 router.put("/:id", auth, async (req, res) => {
   try {
     const articleId = req.params.id;
@@ -138,8 +163,11 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-// PUT /api/articles/:id/upvote
-
+/**
+ * @route  PUT /api/articles/:id/upvote
+ * @desc   Upvote an article by ID
+ * @access Private
+ */
 router.put("/:id/upvote", auth, async (req, res) => {
   try {
     const article = await Article.findById(req.params.id);
