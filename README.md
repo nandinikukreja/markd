@@ -25,7 +25,7 @@ Markd is a content platform that enables users to share their expertise through 
 - **Article Management**
     - Create/Edit/Delete articles
     - Upvoting system
-    - Tag-based organization
+    - Search functionality based on titles (Will be updated to include tags and content)
 
 - **User Features**
     - Custom profiles
