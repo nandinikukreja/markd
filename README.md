@@ -132,7 +132,7 @@ markd/
 
    - Article creation
    - Image upload and management
-   - Tag system for categorization
+   - Search Functionality based on Titles (Will be updated to include tags and content)
 
 3. **User Interactions**
    - Article upvoting system
