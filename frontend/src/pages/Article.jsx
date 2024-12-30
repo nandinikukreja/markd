@@ -64,6 +64,34 @@ const Article = () => {
     }
   };
 
+  const handleDownvote = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/articles/${id}/downvote`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const updatedArticle = await response.json();
+        setArticle((article) => ({
+          ...article,
+          upvotes: updatedArticle.upvotes,
+        }));
+      } else if (response.status === 400) {
+        setModalMessage("Article not upvoted yet!");
+        setShowModal(true);
+      } else {
+        console.error("Failed to downvote");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
   const closeModal = () => {
     setShowModal(false);
   };
@@ -153,7 +181,10 @@ const Article = () => {
 
           {/* Content */}
           <div className="prose prose-lg max-w-none prose-pre:bg-gray-100 prose-pre:p-4 prose-pre:rounded-lg prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-headings:text-gray-900 prose-a:text-blue-600 hover:prose-a:text-blue-500">
-            <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} className="ql-editor" />
+            <div
+              dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+              className="ql-editor"
+            />
           </div>
 
           {/* Tags and Actions */}
@@ -192,6 +223,26 @@ const Article = () => {
                 </svg>
                 <span>Upvote • {article.upvotes}</span>
               </button>
+              <button
+                onClick={handleDownvote}
+                className="px-6 py-2 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-full hover:from-gray-900 hover:to-black transition-all duration-300 flex items-center gap-2 group"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 transform group-hover:scale-110 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+                <span>Downvote</span>
+              </button>
 
               {article.author._id === localStorage.getItem("userId") && (
                 <button
@@ -220,12 +271,7 @@ const Article = () => {
         </div>
       </article>
 
-      {showModal && (
-        <Modal
-          message={modalMessage}
-          onClose={closeModal}
-        />
-      )}
+      {showModal && <Modal message={modalMessage} onClose={closeModal} />}
     </div>
   );
 };
