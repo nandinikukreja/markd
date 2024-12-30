@@ -173,7 +173,12 @@ router.put("/:id/upvote", auth, async (req, res) => {
     const article = await Article.findById(req.params.id);
     if (!article) return res.status(404).json({ message: "Article not found" });
 
-    article.upvotes += 1;
+    if (article.upvotedBy.includes(req.user.userId)) {
+      return res.status(400).json({ message: "Article already upvoted" });
+    }
+
+    article.upvotedBy.push(req.user.userId);
+    article.upvotes++;
     await article.save();
     res.status(200).json(article);
   } catch (err) {
