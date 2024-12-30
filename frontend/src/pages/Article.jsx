@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
+import Modal from "../components/Modal";
 
 const Article = () => {
   const { id } = useParams();
@@ -8,6 +9,8 @@ const Article = () => {
   const [article, setArticle] = useState(null);
   const [sanitizedContent, setSanitizedContent] = useState("");
   const [loading, setLoading] = useState(true);
+  const [modalMessage, setModalMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/articles/${id}`, {
@@ -50,12 +53,19 @@ const Article = () => {
           ...article,
           upvotes: updatedArticle.upvotes,
         }));
+      } else if (response.status === 400) {
+        setModalMessage("Article already upvoted!");
+        setShowModal(true);
       } else {
         console.error("Failed to upvote");
       }
     } catch (err) {
-      console.error("Error:", error);
+      console.error("Error:", err);
     }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   if (loading) {
@@ -143,7 +153,7 @@ const Article = () => {
 
           {/* Content */}
           <div className="prose prose-lg max-w-none prose-pre:bg-gray-100 prose-pre:p-4 prose-pre:rounded-lg prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-headings:text-gray-900 prose-a:text-blue-600 hover:prose-a:text-blue-500">
-            <div dangerouslySetInnerHTML={{ __html: sanitizedContent }}  className="ql-editor"/>
+            <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} className="ql-editor" />
           </div>
 
           {/* Tags and Actions */}
@@ -209,6 +219,13 @@ const Article = () => {
           </div>
         </div>
       </article>
+
+      {showModal && (
+        <Modal
+          message={modalMessage}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 };
