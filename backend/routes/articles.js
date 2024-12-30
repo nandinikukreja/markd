@@ -186,4 +186,29 @@ router.put("/:id/upvote", auth, async (req, res) => {
   }
 });
 
+/**
+ * @route PUT /api/articles/:id/downvote
+ * @desc Downvote an article by ID
+ * @access Private
+ */
+router.put("/:id/downvote", auth, async (req, res) => {
+  try {
+    const article = await Article.findById(req.params.id);
+    if (!article) return res.status(404).json({ message: "Article not found" });
+
+    if (!article.upvotedBy.includes(req.user.userId)) {
+      return res.status(400).json({ message: "Article not upvoted" });
+    }
+
+    article.upvotedBy = article.upvotedBy.filter(
+      (userId) => userId !== req.user.userId
+    );
+    article.upvotes--;
+    await article.save();
+    res.status(200).json(article);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+})
+
 export default router;
