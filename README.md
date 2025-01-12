@@ -136,7 +136,6 @@ markd/
 
 3. **User Interactions**
    - Article upvoting system
-   - User following mechanism
 
 ## Acknowledgments
 
