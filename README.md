@@ -1,150 +1,25 @@
-# Markd
+﻿# markd
+ Developed Markd, a full-stack blog-sharing platform enabling users to create, edit, upvote, and manage articles, with secure user authentication and role-based access control.
 
-<div align="center">
+Designed and implemented RESTful APIs for user and article management using Express.js and MongoDB with Mongoose.
 
-![Banner Image](./frontend/public/MarkdBannerImg.png)
+Built responsive UI using React.js and Tailwind CSS, with client-side routing and state management using React Hooks.
 
-_A modern platform for knowledge sharing and discovery._
+Incorporated JWT-based authentication, bcrypt for password hashing, and CORS configurations to ensure secure user interactions.
 
-[Demo](http://ec2-13-61-7-254.eu-north-1.compute.amazonaws.com:8080/) · [Report Bug](https://github.com/harshpreet931/markd/issues) · [Request Feature](https://github.com/harshpreet931/markd/issues)
+Implemented pagination, upvoting, and real-time loading skeletons for improved UX.
 
-</div>
+🧩 Impact & Optimization
+Reduced functionality for guest users by restricting article creation/editing and enabling only read-only access, ensuring better content moderation.
 
-## Overview
+Applied lazy loading and modal reuse, which improved page speed and memory efficiency.
 
-Markd is a content platform that enables users to share their expertise through beautifully crafted articles. Built with modern web technologies, it offers a seamless writing and reading experience with features like real-time article updates, user authentication, and social interactions.
+Designed with future scalability in mind: modular architecture, route protection, and potential for WebSocket-based real-time interactions.
 
-## Key Features
+✅ Key Achievements
+Created production-ready deployment plans using Vercel and MongoDB Atlas.
 
-- **Secure Authentication System**
-    - JWT-based authentication
-    - Protected routes
-    - Secure password hashing
-    - Session management
+Used Postman for API testing and ESLint for maintaining code quality.
 
-- **Article Management**
-    - Create/Edit/Delete articles
-    - Upvoting system
-    - Search functionality based on titles (Will be updated to include tags and content)
-
-- **User Features**
-    - Custom profiles
-    - Article portfolios
-    - Bio management
-
-- **Modern UI/UX**
-    - Responsive design
-    - Intuitive navigation
-    - Loading states
-
-## Tech Stack
-
-### Frontend
-
-- [React](https://reactjs.org/) - UI library
-- [React Router](https://reactrouter.com/) - Navigation
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [Vite](https://vitejs.dev/) - Build tool
-
-### Backend
-
-- [Node.js](https://nodejs.org/) - Runtime environment
-- [Express.js](https://expressjs.com/) - Web framework
-- [MongoDB](https://www.mongodb.com/) - Database
-- [JWT](https://jwt.io/) - Authentication
-- [bcrypt](https://github.com/kelektiv/node.bcrypt.js) - Password hashing
-
-
-## Prerequisites
-
-```json
-{
-  "node": ">=14.x",
-  "npm": ">=6.x",
-  "mongodb": ">=4.x" // can be local or cloud-based.
-}
-```
-
-## Quick Start
-
-1. **Clone and Install**
-
-```bash
-# Clone the repository
-git clone https://github.com/harshpreet931/markd.git
-
-# Install dependencies
-cd markd
-npm install
-```
-
-2. **Environment Setup**
-
-```bash
-# Backend (.env)
-PORT=8081
-DB_CONNECTION_STRING=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-
-# Frontend (.env)
-VITE_API_URL=http://localhost:8081
-```
-
-3. **Development**
-
-```bash
-# Terminal 1 - Backend
-cd backend
-node index.js
-
-# Terminal 2 - Frontend
-cd frontend
-npm run dev
-```
-
-Visit `http://localhost:5173` to see the app in action.
-
-## Project Structure
-
-```
-markd/
-├── backend/                # Backend source code
-│   ├── middleware/        # Authentication middleware
-│   ├── models/           # Database models
-│   └── routes/           # API routes
-└── frontend/             # Frontend source code
-    ├── public/           # Static assets
-    └── src/
-        ├── components/   # Reusable components
-        ├── pages/        # Page components
-        └── routes/       # Route definitions
-```
-
-## Application Flow
-
-1. **Authentication**
-
-   - User registration with email verification
-   - JWT-based authentication
-   - Protected route handling
-
-2. **Content Management**
-
-   - Article creation
-   - Image upload and management
-   - Search Functionality based on Titles (Will be updated to include tags and content)
-
-3. **User Interactions**
-   - Article upvoting system
-
-## Acknowledgments
-
-- [React Documentation](https://reactjs.org/docs)
-- [Tailwind CSS](https://tailwindcss.com)
-- [MongoDB Documentation](https://docs.mongodb.com)
-
----
-
-<div align="center">
-Made with ❤️ by <a href="https://linkedin.com/in/harshpreet931">Harshpreet Singh</a>
-</div>
+Implemented sample data generation scripts to simulate production use cases for testing.
+# markd
